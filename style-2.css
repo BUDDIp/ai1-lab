@@ -1,9 +1,9 @@
 body {
-    background: linear-gradient(30deg, #312F37, #362F42,#413F47);
-    color: #F1FAEE;
+    background: url("images/bg.jpg") no-repeat, linear-gradient(30deg, #bbb5cb, #a092b8, #6c708e), url("images/bg.jpg");
+    color: #171718;
 
     line-height: 1.6;
-    font-family: "Roboto Light" ,Arial, sans-serif;
+    font-family: Bahnschrift ,Arial, sans-serif;
 
     margin: 0;
     padding: 0;
@@ -13,6 +13,7 @@ h2 {
     margin-top: 2em;
     border-bottom: 2px solid #ddd;
     padding-bottom: 0.3em;
+    text-align: center;
 }
 
 h3 {
@@ -43,8 +44,9 @@ header div {
     right: 0;
 }
 
-header h1 {
+header div h1 {
     margin-right: 0.5em;
+    visibility: hidden;
 }
 
 header img.logo {
@@ -87,7 +89,7 @@ nav ul li img{
 div.midSection {
     display: flex;
     flex-direction: row;
-    margin-top: 15dvh;
+    margin-top: 12dvh;
 
     padding: 1em;
 }
@@ -100,16 +102,15 @@ div.firstBox, div.secondBox, div.thirdBox {
 }
 
 div.firstBox {
-    background: linear-gradient(to left, transparent, 10%, darkslategrey, darkslategrey), url("images/pacman-7024232_1280.jpg");
-    background-position: right center;
+    background: #95bbbb;
 }
 
 div.secondBox {
-    background-color: rgb(28, 122, 36);
+    background-color: rgb(142, 175, 145);
 }
 
 div.thirdBox {
-    background-color: rgb(182, 104, 81);
+    background-color: rgb(193, 168, 160);
 }
 
 a {
@@ -118,14 +119,14 @@ a {
 }
 
 footer {
-    background-color: #171616;
-    border-radius: 2em;
+    color: white;
     position: fixed;
     text-align: center;
     font-size: 0.5em;
     padding: 0.01dvh 1dvw;
-    bottom: 1em;
-    right: 6em;
+    bottom: 0;
+    right: 0;
+    width: 100%;
 }
 
 @media only screen and (max-width: 600px)
@@ -134,13 +135,14 @@ footer {
         height: 10dvh;
         width: 100%;
         flex-direction: column-reverse;
+        justify-content: center;
     }
     header div {
         position: relative;
         top: 3em;
         left: 2em;
     }
-    header h1 {
+    header div h1 {
         margin-right: 2dvw;
         font-size: 1.5em;
     }
@@ -176,18 +178,6 @@ footer {
         margin: 0.5em 2dvw 1em 2dvw;
         padding: 1em;
     }
-
-    div.firstBox {
-        background: darkslategrey;
-    }
-
-    div.secondBox {
-        background: rgb(28, 122, 36);
-    }
-
-    div.thirdBox {
-        background: rgb(182, 104, 81);
-    }
 }
 
 @media only screen and (max-width: 900px)
@@ -196,14 +186,14 @@ footer {
         height: 10dvh;
         width: 100%;
         flex-direction: column-reverse;
-        padding: 1em;
     }
     header div {
         position: relative;
         top: 3em;
         left: 2em;
     }
-    header h1 {
+    header div h1 {
+        visibility: visible;
         margin-right: 2dvw;
         font-size: 1.5em;
     }
@@ -220,6 +210,7 @@ footer {
         text-align: center;
 
         width: 25dvw;
+        height: 4dvw;
     }
 
     nav ul li img{
@@ -229,7 +220,7 @@ footer {
     div.midSection {
         display: flex;
         flex-direction: column;
-        margin-top: 20dvh;
+        margin-top: 12dvh;
         margin-left: 0;
 
         padding: 1em;
@@ -239,16 +230,8 @@ footer {
         margin: 0.5em 2dvw 1em 2dvw;
         padding: 1em;
     }
-
-    div.firstBox {
-        background: darkslategrey;
-    }
-
-    div.secondBox {
-        background: rgb(28, 122, 36);
-    }
-
-    div.thirdBox {
-        background: rgb(182, 104, 81);
-    }
 }
+
+/*header, footer, nav, div, ul, li, h1, h2, h3, p{*/
+/*    border: 2px dotted red;*/
+/*}*/

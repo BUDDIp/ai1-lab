@@ -28,7 +28,7 @@ p {
 header {
     position: absolute;
     display: flex;
-    background: linear-gradient(to left, #312F50, #312F37);
+    background: linear-gradient(to left, #696797, #312F37);
 
     justify-content: right;
     align-items: center;
@@ -59,9 +59,11 @@ header img.logo {
 /*Nawigacja*/
 nav {
     position: fixed;
-    background: linear-gradient(to right, #3E2B4B, #3E3B4B);
+    background: linear-gradient(#7c8ba1, #9580a0);
+    border-right: 0.2em solid #786084;
+    max-width: 100px;
     width: 8dvw;
-    height: 100dvh;
+    height: 100%;
 
     left: 0;
     bottom: 0;
@@ -81,6 +83,11 @@ nav ul li {
     text-align: center;
 }
 
+nav ul li img{
+    max-width: 70px;
+    width: 4dvw;
+}
+
 /*Główna czesc strony*/
 div.midSection {
     display: flex;
@@ -94,7 +101,7 @@ div.midSection {
 div.firstBox, div.secondBox, div.thirdBox {
     border-radius: 2em;
     font-size: 1em;
-    margin: 0.5em 5em 1em 5em;
+    margin: 0.5em 2dvw 1em 2dvw;
     padding: 1em;
 }
 
@@ -244,3 +251,8 @@ footer {
         background: rgb(182, 104, 81);
     }
 }
+
+
+/*header, footer, nav, div, ul, li, h1, h2, h3, p{*/
+/*    border: 2px dotted red;*/
+/*}*/
