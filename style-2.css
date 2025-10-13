@@ -1,67 +1,107 @@
 body {
-    background-color: rgb(214, 214, 214);
-    font-family: Arial, sans-serif;
+    background: linear-gradient(30deg, #312F37, #362F42,#413F47);
+    color: #F1FAEE;
+
+    line-height: 1.6;
+    font-family: "Roboto Light" ,Arial, sans-serif;
+
     margin: 0;
     padding: 0;
 }
 
+h2 {
+    margin-top: 2em;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.3em;
+}
+
+h3 {
+    margin-top: 1.5em;
+}
+
+p {
+    margin: 0.5em 0 1em;
+}
+
 header {
-    background-color: rgb(59, 59, 80);
-    color: white;
-    text-align: center;
-    padding: 1em 0;
-}
-
-footer {
-    background-color: rgb(30, 172, 30);
-    color: white;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
-
-div.midSection {
+    position: absolute;
     display: flex;
-    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    height: 15dvh;
     width: 100%;
+
+    top: 0;
+    right: 0;
 }
 
-a {
-    color: white;
-    text-decoration: none;
-    font-weight: bolder;
+header div {
+    position: absolute;
+    display: flex;
+    right: 0;
 }
 
-nav {
-    background-color: rgb(97, 93, 117);
-    width: 100%;
+header h1 {
+    margin-right: 0.5em;
 }
 
+header img.logo {
+    margin-right: 2em;
+    transform: rotate(17deg);
+    align-self: center;
+}
+
+/*Nawigacja*/
 nav ul {
     display: flex;
+    flex-direction: row;
     list-style-type: none;
-    padding: 1em;
+
+    justify-items: center;
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li {
-    margin: 0.2em 1em;
+    background-color: #c6cece;
+
+    border-radius: 2em;
+    border: 0.2em solid #c4546d;
+
+    margin: 2em 1em;
+    padding: 0.2em;
+    text-align: center;
+
+    width: 10em;
 }
 
-div.container {
+nav ul li img{
+    width: 15%;
+}
+
+/*Główna czesc strony*/
+div.midSection {
     display: flex;
     flex-direction: row;
+    margin-top: 15dvh;
+
+    padding: 1em;
 }
 
 div.firstBox, div.secondBox, div.thirdBox {
-    width: auto;
-    font-size:1em;
-    margin: 1em;
+    border-radius: 2em;
+    font-size: 1em;
+    margin: 0.5em 1em 5em 1em;
     padding: 1em;
 }
 
 div.firstBox {
-    background-color: lightblue;
+    background: linear-gradient(to left, transparent, 10%, darkslategrey, darkslategrey), url("images/pacman-7024232_1280.jpg");
+    background-position: right center;
 }
 
 div.secondBox {
@@ -70,4 +110,145 @@ div.secondBox {
 
 div.thirdBox {
     background-color: rgb(182, 104, 81);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #171616;
+    border-radius: 2em;
+    position: fixed;
+    text-align: center;
+    font-size: 0.5em;
+    padding: 0.01dvh 1dvw;
+    bottom: 1em;
+    right: 6em;
+}
+
+@media only screen and (max-width: 600px)
+{
+    header {
+        height: 10dvh;
+        width: 100%;
+        flex-direction: column-reverse;
+    }
+    header div {
+        position: relative;
+        top: 3em;
+        left: 2em;
+    }
+    header h1 {
+        margin-right: 2dvw;
+        font-size: 1.5em;
+    }
+    header img.logo {
+        margin-right: 3dvw;
+        width: 20%;
+        transform: rotate(17deg);
+        align-self: center;
+    }
+
+    nav ul li {
+        margin: 2.5em 2dvw;
+        padding: 0.2em;
+        text-align: center;
+
+        width: 25dvw;
+    }
+
+    nav ul li img{
+        width: 15%;
+    }
+
+    div.midSection {
+        display: flex;
+        flex-direction: column;
+        margin-top: 12dvh;
+        margin-left: 0;
+
+        padding: 1em;
+    }
+    div.firstBox, div.secondBox, div.thirdBox {
+        font-size: 0.8em;
+        margin: 0.5em 2dvw 1em 2dvw;
+        padding: 1em;
+    }
+
+    div.firstBox {
+        background: darkslategrey;
+    }
+
+    div.secondBox {
+        background: rgb(28, 122, 36);
+    }
+
+    div.thirdBox {
+        background: rgb(182, 104, 81);
+    }
+}
+
+@media only screen and (max-width: 900px)
+{
+    header {
+        height: 10dvh;
+        width: 100%;
+        flex-direction: column-reverse;
+        padding: 1em;
+    }
+    header div {
+        position: relative;
+        top: 3em;
+        left: 2em;
+    }
+    header h1 {
+        margin-right: 2dvw;
+        font-size: 1.5em;
+    }
+    header img.logo {
+        margin-right: 3dvw;
+        width: 20%;
+        transform: rotate(17deg);
+        align-self: center;
+    }
+
+    nav ul li {
+        margin: 2.5em 2dvw;
+        padding: 0.2em;
+        text-align: center;
+
+        width: 25dvw;
+    }
+
+    nav ul li img{
+        width: 15%;
+    }
+
+    div.midSection {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20dvh;
+        margin-left: 0;
+
+        padding: 1em;
+    }
+    div.firstBox, div.secondBox, div.thirdBox {
+        font-size: 0.8em;
+        margin: 0.5em 2dvw 1em 2dvw;
+        padding: 1em;
+    }
+
+    div.firstBox {
+        background: darkslategrey;
+    }
+
+    div.secondBox {
+        background: rgb(28, 122, 36);
+    }
+
+    div.thirdBox {
+        background: rgb(182, 104, 81);
+    }
 }
