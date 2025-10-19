@@ -1,0 +1,156 @@
+html {
+    height: 100dvh;
+}
+body {
+    display: flex;
+    justify-content: center;
+
+
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+    background: #2C2C2C;
+    color: rgb(230, 230, 230);
+
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+#toDoList {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+
+    background: #522546;
+
+    width: 80dvw;
+    border: 0.5em solid #1d0c1f;
+    border-radius: 1em;
+
+    padding: 1em;
+    margin-top: 5%;
+}
+
+#container {
+    display: grid;
+    row-gap: 0.5em;
+
+    margin: 1em 0;
+}
+
+footer {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    column-gap: 1em;
+}
+
+#searchBar, #textField, #dateField, #addTask {
+    background: #ffccd2;
+    border-radius: 2em;
+    padding: 0.2em 0.5em;
+}
+
+#searchBar {
+    background-color: #ffccd2;
+    background-image: url('./img/search-icon.png');
+    background-position: 0.5em;
+    background-size: 1em;
+    background-repeat: no-repeat;
+    padding-left: 2em;
+}
+
+#addTask {
+    margin-left: 1em;
+    background: #F7374F;
+    border: 0.2em solid #38071e;
+    color: rgb(224, 230, 236);
+    font-weight: bold;
+    text-shadow:0 2px rgb(52, 45, 55);
+
+    transition: 0.2s;
+}
+#addTask:hover {
+    background: rgb(52, 93, 92);
+}
+
+.entry {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+
+    background: #88304E;
+    color: rgb(230, 230, 230);
+    font-weight: bold;
+    text-shadow:0 2px rgb(52, 45, 55);
+    border-radius: 1em;
+}
+
+.entry .checkbox {
+    background-color: rgb(218, 217, 225);
+
+    border: 0.2em solid rgb(27, 17, 80);
+    border-radius: 0.2em;
+
+    padding: 0.5em;
+    margin: 0.5em;
+}
+.entry .removeB {
+    position: absolute;
+    right: 0.2em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #F7374F;
+    background-image: url("./img/trash.png");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+
+    justify-self: flex-end;
+
+    border: 0;
+    border-radius: 10em;
+    padding: 1em;
+    margin: 0.5em;
+}
+
+.entry .info {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: 90%;
+    margin-right: 2.5em;
+}
+
+.line {
+    position: absolute;
+    visibility: hidden;
+
+    justify-self: center;
+    align-self: center;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: rgb(161, 159, 159);
+}
+
+::-moz-selection, ::selection
+{
+    background: rgb(81, 116, 81);
+    color: aliceblue;
+}
+
+.HL {
+    background: yellow;
+    color: red;
+    text-shadow: none;
+}
