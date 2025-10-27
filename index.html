@@ -1,21 +1,51 @@
 <!DOCTYPE html>
-<html lang="en_En">
-    <head>
-        <meta charset="UTF-8">
-        <title>ToDo Strona</title>
-        <script src="script.js"></script>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body onload="start()">
-        <div id="toDoList">
-            <input id="searchBar" onfocus="focusText('searchBar')" onkeyup="changedSearchPrompt()">
-            <div id="container">
-            </div>
-            <footer>
-                <input id="textField" onfocus="focusText('textField')">
-                <input id="dateField" type="date">
-                <button id="addTask" type="button" onclick="addElement()">Add</button>
-            </footer>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="leaflet-1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="leaflet-1.7.1/leaflet-src.js"></script>
+    <script src="leaflet-1.7.1/leaflet-providers.js"></script>
+    <script src="leaflet-1.7.1/leaflet-image.js"></script>
+    <script src="script.js"></script>
+</head>
+<body onload="startHTML()">
+
+<div id="grid">
+    <div id="mapControls">
+        <div id="map"></div>
+
+        <button id="getLocation" onclick="getLocation()">Get Current Location</button>
+        <button id="saveButton" onclick="saveMapAsImage()">Save Raster Map</button>
+    </div>
+    <div id="obraz">
+        <canvas id="rasterMap"></canvas>
+    </div>
+    <div id="pomieszane">
+
+    </div>
+    <div id="ulozone">
+        <div class="grid_puzzle">
+            <div id="T0" class="target"></div>
+            <div id="T1" class="target"></div>
+            <div id="T2" class="target"></div>
+            <div id="T3" class="target"></div>
+            <div id="T4" class="target"></div>
+            <div id="T5" class="target"></div>
+            <div id="T6" class="target"></div>
+            <div id="T7" class="target"></div>
+            <div id="T8" class="target"></div>
+            <div id="T9" class="target"></div>
+            <div id="T10" class="target"></div>
+            <div id="T11" class="target"></div>
+            <div id="T12" class="target"></div>
+            <div id="T13" class="target"></div>
+            <div id="T14" class="target"></div>
+            <div id="T15" class="target"></div>
         </div>
-    </body>
+    </div>
+</div>
+
+</body>
 </html>
