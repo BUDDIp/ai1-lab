@@ -1,176 +1,227 @@
-let map;
-let marker;
-let width;
-let height;
-
-let placedCorrectly = 0;
-
-function showNotification()
-{
-    Notification.requestPermission();
-
-    if(Notification.permission === "granted")
+const WeatherApp = class {
+    constructor(key) 
     {
-        const notification = new Notification("Congratulations! You made it!");
+        this.key = key;
+
+        this.container = document.getElementById("container");
+        this.currentWeather = "";
+        this.forecastWeather = "";
+        this.weatherRequest = 'https://api.openweathermap.org/data/2.5/weather?appid=ed4cd86be9f900b86179827780e6980d&q={query}&lang=pl&units=metric';
+        this.forecastRequest = 'https://api.openweathermap.org/data/2.5/forecast?appid=ed4cd86be9f900b86179827780e6980d&q={query}&lang=pl&units=metric';
     }
-}
 
-function startHTML()
-{
-    map = L.map('map').setView([53.430127, 14.564802], 18);
-    // L.tileLayer.provider('OpenStreetMap.DE').addTo(map);
-    L.tileLayer.provider('Esri.WorldImagery').addTo(map);
-    marker = L.marker([53.430127, 14.564802]).addTo(map);
-    marker.bindPopup("<strong>Hello!</strong><br>This is a popup.");
-
-    let canvas = document.getElementById("rasterMap");
-    let dimensions = map.getSize();
-    width = dimensions.x;
-    height = dimensions.y;
-    canvas.width = width;
-    canvas.height = height;
-
-    // Set target behaviour
-    let targets = document.querySelectorAll(".target");
-
-    for(let target of targets)
+    getCurrentWeather(query)
     {
-        target.style.border = "1px dashed red";
+        let url = this.weatherRequest.replace("{query}", query);
 
-        target.style.width = width/4 + "px";
-        target.style.height = height/4 + "px";
-
-        target.addEventListener("dragenter", function (event){
-            this.style.border = "1px solid #252525";
-        });
-        target.addEventListener("dragexit", function (event){
-            this.style.border = "1px dashed red";
-        });
-        target.addEventListener("drop", function (event){
-            let myPiece = document.querySelector("#" + event.dataTransfer.getData("text"));
-
-            // Sprawdz czy miejsce jest puste
-            if(this.innerHTML === "") {
-                this.style.border = "none";
-                this.appendChild(myPiece);
-
-                // Sprawdz czy element jest na swoim miejscu
-                if(myPiece.id.slice(1) === this.id.slice(1))
-                {
-                    myPiece.draggable = false;
-                    this.style.border = "0 dashed red";
-                    placedCorrectly++;
-
-                    console.log("Poprawnie, umieszczono " + placedCorrectly.toString() + " z 16 puzzli");
-                    if(placedCorrectly === 16)
-                    {
-                        console.log("Ukonczono!");
-                        showNotification();
-                    }
-                }
-            }
-
-        }, false    );
-        target.addEventListener("dragover",function (event){
-           event.preventDefault();
-        });
-    }
-}
-function getLocation()
-{
-    if (! navigator.geolocation) {
-        console.log("No geolocation.");
-    }
-
-    navigator.geolocation.getCurrentPosition(position => {
-        console.log(position);
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
-
-        map.setView([lat, lon]);
-    }, positionError => {
-        console.error(positionError);
-    });
-}
-
-function saveMapAsImage()
-{
-    leafletImage(map, function (err, canvas) {
-        // here we have the canvas
-        let rasterMap = document.getElementById("rasterMap");
-        let rasterContext = rasterMap.getContext("2d");
-
-        rasterContext.drawImage(canvas, 0, 0, width, height);
-
-        sliceImage();
-    });
-}
-
-function sliceImage()
-{
-    // Wyczysc kontener
-    const container = document.getElementById("pomieszane");
-    container.innerHTML = "";
-
-    // Okresl rozmiary czesci
-    const sw = width / 4;
-    const sh = height / 4;
-
-    // zapisz informacje o kazdym elemencie obrazu w tablicy
-    const arrayOfImages = [];
-    for (let i = 0; i < 4; i++) {
-        const offset_y = sh * i;
-
-        for (let j = 0; j < 4; j++) {
-            // utworz element canvas
-
-            const offset_x = sw * j;
-
-            const info = ["C" + (i * 4 + j), offset_x, offset_y];
-            arrayOfImages.push(info);
-        }
-    }
-
-    //shuffle
-    let size = arrayOfImages.length;
-
-    for(let i  = 0; i < size; i++)
-    {
-         let rand = Math.floor(Math.random() * size);
-         const temp = arrayOfImages[i];
-         arrayOfImages[i] = arrayOfImages[rand];
-         arrayOfImages[rand] = temp;
-    }
-
-    // Ryswoanie elementow
-    leafletImage(map, function (err, canvas) {
-        for(let i = 0; i < size; i++)
-        {
-            const pieceInfo = arrayOfImages[i];
-            const id = pieceInfo[0];
-            const offset_x = pieceInfo[1];
-            const offset_y = pieceInfo[2];
-
-
-            const image = document.createElement("canvas");
-            image.width = width;
-            image.height = height;
-            image.classList.add("piece");
-            image.id = id;
-            image.draggable = true;
-            image.style.width = sw + "px";
-            image.style.height = sh + "px";
-
-            let rasterContext = image.getContext("2d");
-
-            rasterContext.drawImage(canvas, offset_x, offset_y, sw, sh, 0, 0, width, height);
-
-            container.append(image);
-
-            image.addEventListener("dragstart", function (event)
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", url);
+        xmlhttp.addEventListener("load", () => {
+            this.currentWeather = JSON.parse(xmlhttp.response);
+            if(this.forecastWeather)
             {
-                event.dataTransfer.setData("text", this.id)
+                console.log(this.forecastWeather);
+                this.drawWeather();
+            }
+        })
+        xmlhttp.send();
+    }
+
+    getForecastWeather(query)
+    {
+        let url = this.forecastRequest.replace("{query}", query);
+
+        fetch(url)
+            .then((response) => {
+                return response.json();
             })
+            .then((data) => {
+                this.forecastWeather = data;
+                if(this.currentWeather)
+                {
+                    console.log(this.forecastWeather);
+                    this.drawWeather();
+                }
+            });
+    }
+
+    drawWeather()
+    {
+        this.container.innerHTML = "";
+
+        if(this.currentWeather)
+        {
+            // Date
+            let currentDate = new Date();
+            let currentDateString = currentDate.toLocaleDateString();
+
+            // Time
+            let currentTimeString = currentDate.toLocaleTimeString().slice(0,5);
+
+            // Image
+            let image = this.currentWeather.weather[0].icon;
+
+            // Desc
+            let desc = this.currentWeather.weather[0].description;
+
+            // Temp
+            let temp = this.currentWeather.main.temp
+
+            // Feel
+            let feel = this.currentWeather.main.feels_like;
+
+
+            this.createFirstWeatherElement(currentDateString, currentTimeString, image, desc, temp, feel);
         }
-    });
+
+        if(this.forecastWeather)
+        {
+            let elements = this.forecastWeather.list;
+
+            for(let element of elements)
+            {
+                // Date
+                let currentDate = new Date(element.dt_txt);
+                let currentDateString = currentDate.toLocaleDateString();
+
+                // Time
+                let currentTimeString = currentDate.toLocaleTimeString().slice(0,5);
+
+                // Image
+                let image = element.weather[0].icon;
+
+                // Desc
+                let desc = element.weather[0].description;
+
+                // Temp
+                let temp = element.main.temp
+
+                // Feel
+                let feel = element.main.feels_like;
+
+
+                this.createWeatherElement(currentDateString, currentTimeString, image, desc, temp, feel);
+            }
+        }
+    }
+
+    getWeather(query)
+    {
+        this.getCurrentWeather(query);
+        this.getForecastWeather(query);
+    }
+
+    createWeatherElement(date, time, image, desc, temp, feel)
+    {
+        //Kontener
+        let element = document.createElement("div");
+        element.classList.add("weatherContainer");
+
+        //Data
+        let dateContainer = document.createElement("p");
+        dateContainer.innerText = date;
+
+        //Godzina
+        let timeContainer = document.createElement("p");
+        timeContainer.innerText = time;
+
+        //Ikona
+        let icon = document.createElement("img");
+        icon.src = "https://openweathermap.org/img/wn/" + image + "@2x.png";
+
+        //Opis
+        let description = document.createElement("p");
+        description.innerText = desc;
+        description.style.textAlign = "center";
+
+        //Temperatura
+        let temperatura = document.createElement("p");
+        temperatura.classList.add("temp");
+        temperatura.innerText = temp + " °C";
+
+        //Odczuwalna
+        let odczuwalna = document.createElement("p");
+        odczuwalna.innerText = "Odczuwalna: " + feel + " °C";
+        odczuwalna.style.fontSize = "0.8em";
+
+
+        //dodawanie elementow
+        element.append(dateContainer);
+        element.append(timeContainer);
+        element.append(icon);
+        element.append(description);
+        element.append(temperatura);
+        element.append(odczuwalna);
+        this.container.append(element);
+    }
+
+    createFirstWeatherElement(date, time, image, desc, temp, feel)
+    {
+        //Kontener
+        let element = document.createElement("div");
+        element.classList.add("weatherContainer");
+        element.id = "firstElement";
+
+
+        //Date and time Kontener
+        let dateCon = document.createElement("div");
+
+        //Date and time Kontener
+        let iconCon = document.createElement("div");
+
+        //Date and time Kontener
+        let tempCon = document.createElement("div");
+
+        //Data
+        let dateContainer = document.createElement("p");
+        dateContainer.innerText = date;
+
+        //Godzina
+        let timeContainer = document.createElement("p");
+        timeContainer.innerText = time;
+
+        //Ikona
+        let icon = document.createElement("img");
+        icon.src = "https://openweathermap.org/img/wn/" + image + "@2x.png";
+        icon.style.width = "50%";
+
+        //Opis
+        let description = document.createElement("p");
+        description.innerText = desc;
+        description.style.textAlign = "center";
+
+        //Temperatura
+        let temperatura = document.createElement("p");
+        temperatura.classList.add("temp");
+        temperatura.innerText = temp + " °C";
+
+        //Odczuwalna
+        let odczuwalna = document.createElement("p");
+        odczuwalna.innerText = "Odczuwalna: " + feel + " °C";
+        odczuwalna.style.fontSize = "0.8em";
+
+
+        //dodawanie elementow
+        dateCon.append(dateContainer);
+        dateCon.append(timeContainer);
+
+        iconCon.append(icon);
+        iconCon.append(description);
+
+        tempCon.append(temperatura);
+        tempCon.append(odczuwalna);
+
+        element.append(dateCon);
+        element.append(tempCon);
+        element.append(iconCon);
+
+        this.container.append(element);
+    }
 }
+
+document.weatherApp = new WeatherApp("ed4cd86be9f900b86179827780e6980d");
+document.querySelector("header #inputContainer input").value = "Szczecin";
+document.querySelector("header #inputContainer button").addEventListener("click", () => {
+    let query = document.querySelector("header #inputContainer input").value;
+    document.weatherApp.getWeather(query);
+});

@@ -1,51 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="leaflet-1.7.1/leaflet.css" />
-    <link rel="stylesheet" href="style.css" type="text/css" />
-    <script src="leaflet-1.7.1/leaflet-src.js"></script>
-    <script src="leaflet-1.7.1/leaflet-providers.js"></script>
-    <script src="leaflet-1.7.1/leaflet-image.js"></script>
-    <script src="script.js"></script>
-</head>
-<body onload="startHTML()">
-
-<div id="grid">
-    <div id="mapControls">
-        <div id="map"></div>
-
-        <button id="getLocation" onclick="getLocation()">Get Current Location</button>
-        <button id="saveButton" onclick="saveMapAsImage()">Save Raster Map</button>
-    </div>
-    <div id="obraz">
-        <canvas id="rasterMap"></canvas>
-    </div>
-    <div id="pomieszane">
-
-    </div>
-    <div id="ulozone">
-        <div class="grid_puzzle">
-            <div id="T0" class="target"></div>
-            <div id="T1" class="target"></div>
-            <div id="T2" class="target"></div>
-            <div id="T3" class="target"></div>
-            <div id="T4" class="target"></div>
-            <div id="T5" class="target"></div>
-            <div id="T6" class="target"></div>
-            <div id="T7" class="target"></div>
-            <div id="T8" class="target"></div>
-            <div id="T9" class="target"></div>
-            <div id="T10" class="target"></div>
-            <div id="T11" class="target"></div>
-            <div id="T12" class="target"></div>
-            <div id="T13" class="target"></div>
-            <div id="T14" class="target"></div>
-            <div id="T15" class="target"></div>
+<html>
+    <head lang="pl-Pl">
+        <title>Pogodynka</title>
+        <meta charset="utf-8">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <link rel="icon" type="image/x-icon" href="https://openweathermap.org/img/wn/10d@2x.png">
+    </head>
+    <body>
+        <header>
+            <h1>Pogodynka</h1>
+            <div id="inputContainer"> 
+                <input>
+                <button type="button">Check</button>
+            </div>
+        </header>
+        <div id="container">
         </div>
-    </div>
-</div>
 
-</body>
+        <script src="script.js"></script>
+    </body>
 </html>
